@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Details</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="logo">Flipkart</div>
+    <input type="text" class="search-box" placeholder="Search..." />
+    <div class="nav-links">Login | Cart</div>
+  </div>
+
+  <div id="product-details" class="product-details"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get("id");
+
+    fetch(`http://localhost:5000/api/products/${productId}`)
+      .then(res => res.json())
+      .then(product => {
+        document.getElementById("product-details").innerHTML = `
+          <div class="product-page">
+            <img src="${product.image}" />
+            <div class="product-info">
+              <h1>${product.name}</h1>
+              <h3>₹${product.price}</h3>
+              <p>${product.description}</p>
+            </div>
+          </div>
+        `;
+      });
+  </script>
+</body>
+</html>
